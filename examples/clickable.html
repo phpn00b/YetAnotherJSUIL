@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>test</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />-->
+		<script src="../src/application.js"></script>
+		<script src="../src/core.js"></script>
+		<script src="../src/panels.js"></script>
+		<script src="../src/forms.js"></script>
+		<script src="../src/mvvm.js"></script>
+		<script type="text/javascript">
+			class ClickCounterComponent extends BaseHTMLComponent {
+				#timesClicked = 0;
+				constructor() {
+					super("div");
+				}
+				onClick(element) {
+					this.#timesClicked++;
+					console.log("Clicked");
+					this.invalidate();
+				}
+				get body() {
+					return `<div onclick="${this.getInvoker("onClick")}">
+								Hello I am a component that has been clicked <strong>${this.#timesClicked}</strong> times
+							</div>`;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script type="text/javascript">
+			var panel = new BasePanelComponent(null);
+			panel.addChild(new ClickCounterComponent());
+			document.getElementById("container").outerHTML = panel.render();
+		</script>
+	</body>
+</html>

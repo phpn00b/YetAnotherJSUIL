@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>test</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />-->
+		<script src="../src/application.js"></script>
+		<script src="../src/core.js"></script>
+		<script src="../src/panels.js"></script>
+		<script src="../src/forms.js"></script>
+		<script src="../src/mvvm.js"></script>
+		<script type="text/javascript">
+			class CurrentTimeComponent extends BaseHTMLComponent {
+				constructor() {
+					super("div", {}, "");
+					setInterval(() => {
+						this.invalidate();
+					}, 1000);
+				}
+				get body() {
+					return `${new Date().toLocaleTimeString()}`;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="container"></div>
+		<script type="text/javascript">
+			var panel = new BasePanelComponent(null);
+			panel.addChild(new CurrentTimeComponent());
+			document.getElementById("container").outerHTML = panel.render();
+		</script>
+	</body>
+</html>
